@@ -9,33 +9,91 @@ document.getElementById("Stand").addEventListener("click", stand);
 
 let table;
 
+let PLAYING = '01';
+let NEXT = '10';
+let FINISHED = '11';
+
+let gameState;
+
 function startGame(){
+    console.clear();
+
     table = new Table();
 
     document.getElementById("Deal").style.visibility="visible";
+    document.getElementById("Hit").style.visibility="hidden";
+    document.getElementById("Stand").style.visibility="hidden";
 }
 
 function deal(){
-    table.deal();
+    gameState = table.deal();
 
-    document.getElementById("Deal").style.visibility="hidden";
-    document.getElementById("Hit").style.visibility="visible";
-    document.getElementById("Stand").style.visibility="visible";
+    console.log('DEALER: ', table.getHandString()[0] , table.getPoints()[0])
+    console.log('PLAYER: ', table.getHandString()[1] , table.getPoints()[1])
+    console.log('.........................................................')
+
+
+    if(gameState[0] == PLAYING){
+
+        document.getElementById("Deal").style.visibility="hidden";
+        document.getElementById("Hit").style.visibility="visible";
+        document.getElementById("Stand").style.visibility="visible";
+
+    } else if(gameState[0] == NEXT){
+
+        console.log('DEALER: ', table.getHandString()[0] , table.getPoints()[0][1]??table.getPoints()[0]) //prints second element of array. if undefined prints single number
+        console.log('PLAYER: ', table.getHandString()[1] , table.getPoints()[1][1]??table.getPoints()[1])
+        console.log('////////////////////////////////////////////////////')
+        console.log('BLACKJACK');
+        console.log('WINNER: ', gameState[1]);
+        console.log('////////////////////////////////////////////////////')
+        
+        document.getElementById("Deal").style.visibility="visible";
+        document.getElementById("Hit").style.visibility="hidden";
+        document.getElementById("Stand").style.visibility="hidden";
+    }
+
+    
 }
 
 function hit(){
-    table.hit();
+    gameState = table.hit();
+
+    console.log('DEALER: ', table.getHandString()[0] , table.getPoints()[0])
+    console.log('PLAYER: ', table.getHandString()[1] , table.getPoints()[1])
+    console.log('.........................................................')
+
+    if(gameState[0] == NEXT){
+        console.log('////////////////////////////////////////////////////')
+        console.log('BUST');
+        console.log('WINNER: ', gameState[1]);
+        console.log('////////////////////////////////////////////////////')
+        
+        document.getElementById("Deal").style.visibility="visible";
+        document.getElementById("Hit").style.visibility="hidden";
+        document.getElementById("Stand").style.visibility="hidden";
+    }
 }
 
 function stand(){
-    table.stand();
+    gameState = table.stand();
+
+    console.log('DEALER: ', table.getHandString()[0] , table.getPoints()[0][1]??table.getPoints()[0])
+    console.log('PLAYER: ', table.getHandString()[1] , table.getPoints()[1][1]??table.getPoints()[1])
+    console.log('.........................................................')
+
+    if(gameState[0] == NEXT){
+        console.log('////////////////////////////////////////////////////')
+        console.log('WINNER: ', gameState[1]);
+        console.log('////////////////////////////////////////////////////')
+        
+        document.getElementById("Deal").style.visibility="visible";
+        document.getElementById("Hit").style.visibility="hidden";
+        document.getElementById("Stand").style.visibility="hidden";
+    }
 } 
 
 //todo split
-
-//doing a 1 or 11
-
-//todo new deal after turn
 //todo end of deck
 
 

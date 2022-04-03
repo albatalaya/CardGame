@@ -30,8 +30,8 @@ class Card {
             case 'K':
                 points='10';
                 break;
-            case 'A': //bug case 1 or 11
-                points='11';
+            case 'A':
+                points='1';
                 break;
         }
         return parseInt(points);

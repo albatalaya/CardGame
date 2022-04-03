@@ -33,6 +33,10 @@ class Player {
     getHand(){
         return this.hand;
     }
+
+    restartHand(){
+        this.hand = new Hand();
+    }
     
 }
 
