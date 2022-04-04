@@ -5,6 +5,7 @@ class Table {
     deck;
     dealer;
     player;
+    split_player;
 
     NOTHING; //before starting the game
     PLAYING; //playing the game
@@ -36,6 +37,10 @@ class Table {
         this.dealer.addCards(this.deck.dealCards(2));
         this.dealer.hideCard();
         this.player.addCards(this.deck.dealCards(2));
+
+        if(this.player.getHand().getCards()[0].getPoints()==this.player.getHand().getCards()[1].getPoints()){
+            this.state = [this.PLAYING, 'SPLIT'];
+        }
 
         if(this.isBlackJack(this.player.getHand())){
             this.dealer.showCard();
@@ -113,6 +118,17 @@ class Table {
 
     getHandString(){
         return [this.dealer.getHandString(), this.player.getHandString()];
+    }
+
+    split(){
+        this.split_player = new Player("Split");
+        let card = this.player.getHand().splitHand();
+        this.split_player.addCards([card]);
+
+        console.log("PLAYER 1 ", this.player.getHandString(), this.player.getPoints());
+        console.log("PLAYER 2 ", this.split_player.getHandString(), this.split_player.getPoints());
+
+
     }
     
 }

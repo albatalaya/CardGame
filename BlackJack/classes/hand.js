@@ -1,10 +1,10 @@
 class Hand {
 
-    cards;
+    handCards;
     totalPoints;
 
     constructor(){
-        this.cards = [];
+        this.handCards = [];
         this.totalPoints = [0,0];
     }
 
@@ -20,40 +20,49 @@ class Hand {
     }
 
     hideCard(){
-        this.cards[1].hide();
+        this.handCards[1].hide();
 
-        this.totalPoints[0] -= this.cards[1].getPoints(); 
-        if(this.cards[1].getPoints()==1){
-            this.totalPoints[1] -= 11; 
+        this.totalPoints[0] -= this.handCards[1].getPoints(); 
+        if(this.handCards[1].getPoints()==1){
+            if(this.handCards[0].getPoints()==1){ // case two aces
+                this.totalPoints[1] = this.totalPoints[0] + 10;
+            } else {
+                this.totalPoints[1] -= 11; 
+            }
+            
         }else{
-            this.totalPoints[1] -= this.cards[1].getPoints(); 
+            this.totalPoints[1] -= this.handCards[1].getPoints(); 
         }
         
     }
 
     showCard(){
-        this.cards[1].show();
+        this.handCards[1].show();
 
-        this.totalPoints[0] += this.cards[1].getPoints(); 
-        if(this.cards[1].getPoints()==1){
-            this.totalPoints[1] += 11; 
+        this.totalPoints[0] += this.handCards[1].getPoints(); 
+        if(this.handCards[1].getPoints()==1){
+            if(this.handCards[0].getPoints()==1){ // case two aces
+                this.totalPoints[1] = this.totalPoints[0];
+            } else {
+                this.totalPoints[1] += 11; 
+            }
         }else{
-            this.totalPoints[1] += this.cards[1].getPoints(); 
+            this.totalPoints[1] += this.handCards[1].getPoints(); 
         }
     }
 
     
-    getHand(){ //temp
+    getHand(){
         let hand = [];
-        for(let i=0; i<this.cards.length; i++){
-            hand.push(this.cards[i].getCard());
+        for(let i=0; i<this.handCards.length; i++){
+            hand.push(this.handCards[i].getCard());
         }
         return hand;
     }
     
     addCards(cards){
         for(let i=0; i<cards.length; i++){
-            this.cards.push(cards[i]);
+            this.handCards.push(cards[i]);
         }
 
         let points= [0,0];
@@ -70,7 +79,7 @@ class Hand {
         this.totalPoints[0] += points[0]; //case ace = 1
         
         if(this.totalPoints[1] + points[1] > 21){
-                this.totalPoints[1]=this.totalPoints[0];
+            this.totalPoints[1]=this.totalPoints[0];
         } else {
             this.totalPoints[1] += points[1]; //case ace = 11
         }
@@ -78,7 +87,18 @@ class Hand {
     }
 
     getCards(){
-        return this.cards;
+        return this.handCards;
+    }
+
+    splitHand(){
+        //card
+        //points 
+        //todo
+        this.totalPoints = [this.handCards[0].getPoints()]
+        if(this.totalPoints == 1){
+            this.totalPoints[1] = this.totalPoints[0] + 10;
+        }
+        return this.handCards.pop();
     }
 
 }

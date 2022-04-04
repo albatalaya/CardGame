@@ -2,20 +2,48 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="chips.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>BlackJack</title>
   </head>
   <body>
     <script type="module" src="./main.js"></script>
     <link rel="stylesheet" href="./style.css" />
 
-    <a id="Start">Start New Game</a>
+    <img
+      src="./assets/background.png"
+      style="position: absolute; z-index: -10; width: 100vw; min-width: 900px"
+    />
 
-    <a id="Deal" style="visibility: hidden">Deal</a>
-    <a id="Hit" style="visibility: hidden">Hit</a>
-    <a id="Stand" style="visibility: hidden">Stand</a>
+    <a id="Start" style="top: 20px; position: absolute">Start New Game</a>
 
-    <!--deal hit stand /double/ split-->
+    <div id="buttons">
+      <a id="Deal" style="visibility: hidden">Deal</a>
+      <a id="Hit" style="visibility: hidden">Hit</a>
+      <a id="Stand" style="visibility: hidden">Stand</a>
+      <a id="Split" style="visibility: hidden">Split</a>
+    </div>
+
+    <!--<img id="background" src="./assets/background.png" />-->
+    <div id="graphics">
+      <img id="table" src="./assets/table.png" width="100%;" />
+      <img id="deck" src="./assets/cards/Deck.png" width="6%" />
+
+      <img id="discards" src="./assets/cards/Deck.png" width="6%" />
+
+      <div id="dealer"></div>
+
+      <div id="dealerPoints">
+        <h7>POINTS:</h7>
+      </div>
+
+      <h2 id="result">WINNER</h2>
+
+      <div id="playerPoints">
+        <h7>POINTS:</h7>
+      </div>
+
+      <div id="player"></div>
+    </div>
   </body>
 </html>

@@ -1,7 +1,119 @@
+body{
+  overflow: hidden;
+  margin:0;
+}
 
 a{
-  background-color: red;
+  margin-left: 20px;
+  background-color: rgb(187, 0, 0);
   color: white;
   padding:10px;
   cursor: pointer;
+  z-index:1;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+#buttons{
+  top:28px;
+  position:absolute;
+  margin-left: 60%;
+}
+
+
+#graphics{
+  margin-top:20px;
+  position:absolute;
+  z-index: -2;
+  min-width: 900px;
+}
+
+#table{
+  z-index:-1;
+  position:relative;
+  display:block;
+}
+
+#deck{
+  visibility: hidden;
+  position:absolute;
+  top: 25%;
+  right: 30%;
+}
+
+#discards{
+  visibility: hidden;
+  position:absolute;
+  top: 25%;
+  left: 30%;
+}
+
+#dealer{
+  position:absolute;
+  top: 25%;
+  width:100%;
+  z-index:2;
+  padding-left:49vw;
+  visibility: hidden;
+}
+
+#dealerPoints{
+  position:absolute;
+  top: 43%;
+  width:100%;
+  z-index:2;
+  text-align: center;
+  color:white;
+  visibility: hidden;
+}
+
+#playerPoints{
+  position:absolute;
+  top: 55%;
+  width:100%;
+  z-index:2;
+  text-align: center;
+  color:white;
+  visibility: hidden;
+}
+
+#player{
+  position:absolute;
+  top: 60%;
+  width:100%;
+  z-index:2;
+  padding-left:49vw;
+  visibility: hidden;
+}
+
+.dealerCards{
+  margin-left: -3%;
+  width:5%;
+}
+
+.playerCards{
+  margin-left: -3%;
+  width:5%;
+}
+
+#result{
+  position:absolute;
+  top: 43%;
+  width:100%;
+  z-index:2;
+  text-align: center;
+  color:yellow;
+  visibility: hidden;
+}
+
+@media only screen and (max-width: 900px)  {
+  #buttons{
+    margin-left: calc(900px*0.6);
+    white-space: nowrap;
+  }
+
+  #dealer, #player{
+    padding-left: calc(900px*0.49);
+  }
+
 }

@@ -10,9 +10,9 @@ class Deck {
 
         this.cards=[];
 
-        for(let i=0; i< card_suits.length; i++){
-            for(let j=0; j< card_ranks.length; j++){
-                this.cards.push(new Card( card_ranks[j], card_suits[i]))
+        for(let i=0; i< card_suits.length; i++){ 
+            for(let j=0; j< card_ranks.length; j++){ 
+                this.cards.push(new Card( card_ranks[j], card_suits[i])) 
             }
         }
 
