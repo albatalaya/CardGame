@@ -9,8 +9,10 @@ class Table {
 
     NOTHING; //before starting the game
     PLAYING; //playing the game
+    SPLIT1; //hand split turn 1
+    SPLIT2; //hand split turn 2
     NEXT; //finished turn, you can deal again 
-    FINISHED; //finished deck //todo
+    FINISHED; //finished deck //todo end deck
 
     state;
 
@@ -20,10 +22,12 @@ class Table {
         this.dealer = new Player("Dealer");
         this.player = new Player("Player");
 
-        this.NOTHING = '00';
-        this.PLAYING = '01';
-        this.NEXT = '10';
-        this.FINISHED = '11';
+        this.NOTHING = '000';
+        this.PLAYING = '001';
+        this.SPLIT1 = '010';
+        this.SPLIT2 = '011';
+        this.NEXT = '100';
+        this.FINISHED = '101';
 
         this.state = [this.NOTHING];
     }
@@ -75,17 +79,37 @@ class Table {
     }
 
     hit(){
-        this.player.addCards(this.deck.dealCards(1));
+        let points;
+        if(this.state[0] == this.SPLIT2){
+            this.split_player.addCards(this.deck.dealCards(1));
+            points = this.split_player.getPoints();
+        } else {
+            this.player.addCards(this.deck.dealCards(1));
+            points = this.player.getPoints();
+        }
+        
 
-        if(this.player.getPoints()>21){
-            this.dealer.showCard();
-            this.state = [this.NEXT, 'DEALER'];
+        if(points>21){
+            if(this.state[0] == this.SPLIT1){
+                this.state = [this.SPLIT2, 'DEALER'];
+            } else if(this.state[0] == this.SPLIT2){
+                this.state = this.stand();
+            } else {
+                this.dealer.showCard();
+                this.state = [this.NEXT, 'DEALER'];
+            }
+            
         }
 
         return this.state;
     }
 
     stand(){
+        if(this.state == this.SPLIT1){
+            this.state = [this.SPLIT2];
+            return this.state
+        }
+        
         this.dealer.showCard();
 
         let dealerPoints = this.dealer.getPoints();
@@ -102,32 +126,62 @@ class Table {
         dealerPoints = this.dealer.getPoints()[1]??this.dealer.getPoints();
         let playerPoints = this.player.getPoints()[1]??this.player.getPoints();
 
-        if(dealerPoints>21 || playerPoints> dealerPoints){
+        let stateSplit = false;
+        if(this.state[0] == this.SPLIT2){
+            stateSplit = true;
+        }
+
+        if(dealerPoints>21 || playerPoints> dealerPoints && playerPoints <=21 ){
             this.state = [this.NEXT, 'PLAYER'];
         } else if(playerPoints == dealerPoints){
             this.state = [this.NEXT, 'PUSH'];
         } else {
             this.state = [this.NEXT, 'DEALER']; 
         }
+        
+        if(stateSplit){
+            let splitPoints = this.split_player.getPoints()[1]??this.split_player.getPoints();
+
+            if(dealerPoints>21 || splitPoints> dealerPoints && splitPoints <=21){
+                this.state.push('PLAYER');
+            } else if(splitPoints == dealerPoints){
+                this.state.push('PUSH');
+            } else {
+                this.state.push('DEALER'); 
+            }
+        }
+
         return this.state;
     }
 
     getPoints(){
-        return [this.dealer.getPoints(), this.player.getPoints()];
+        if(this.split_player == undefined){ 
+            return [this.dealer.getPoints(), this.player.getPoints()];
+        }
+        return [this.dealer.getPoints(), this.player.getPoints(), this.split_player.getPoints()];
     }
 
     getHandString(){
-        return [this.dealer.getHandString(), this.player.getHandString()];
+        if(this.split_player == undefined){ //todo finish split player
+            return [this.dealer.getHandString(), this.player.getHandString()];
+        }
+
+        return [this.dealer.getHandString(), this.player.getHandString(), this.split_player.getHandString()];
     }
 
-    split(){
+    splitHand(){
         this.split_player = new Player("Split");
         let card = this.player.getHand().splitHand();
         this.split_player.addCards([card]);
 
-        console.log("PLAYER 1 ", this.player.getHandString(), this.player.getPoints());
-        console.log("PLAYER 2 ", this.split_player.getHandString(), this.split_player.getPoints());
+        
 
+        //console.log("PLAYER 1 ", this.player.getHandString(), this.player.getPoints());
+        //console.log("PLAYER 2 ", this.split_player.getHandString(), this.split_player.getPoints());
+
+        this.state = [this.SPLIT1];
+
+        return this.state;
 
     }
     

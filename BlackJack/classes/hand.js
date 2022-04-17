@@ -91,11 +91,9 @@ class Hand {
     }
 
     splitHand(){
-        //card
-        //points 
-        //todo
-        this.totalPoints = [this.handCards[0].getPoints()]
-        if(this.totalPoints == 1){
+        this.totalPoints = [this.handCards[0].getPoints(), this.handCards[0].getPoints()]; 
+
+        if(this.totalPoints[0] == 1){
             this.totalPoints[1] = this.totalPoints[0] + 10;
         }
         return this.handCards.pop();
