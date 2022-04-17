@@ -20,8 +20,7 @@ class Deck {
     }
 
     shuffle(){
-        //this.cards = this.cards.sort(() => Math.random() - 0.5);
-        this.cards.pop(); //temp
+        this.cards = this.cards.sort(() => Math.random() - 0.5);
     }
 
     dealCards(n){
@@ -32,6 +31,10 @@ class Deck {
         }
 
         return aux;
+    }
+
+    getNumCards(){
+        return this.cards.length;
     }
     
 }

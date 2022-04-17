@@ -20,6 +20,18 @@ a{
   margin-left: 60%;
 }
 
+#score{
+  color: black;
+  background-color: rgb(222, 222, 20);
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  padding:10px;
+  margin-left : 42%;
+  margin-top:20px;
+  display: block;
+  position: absolute;
+}
+
 
 #graphics{
   margin-top:20px;
