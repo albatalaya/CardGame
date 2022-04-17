@@ -7,7 +7,7 @@ BlackJack Game for the JavaScript project.
 - Vanilla JavaScript
 
 ## Getting started
-* Clone this repository: `git clone https://github.com/albatalaya/CardGame.git.
+* Clone this repository: `git clone https://github.com/albatalaya/CardGame.git`
 * `cd BlackJack`
 * `npm install` 
 * `npm run build` 
