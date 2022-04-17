@@ -1,5 +1,5 @@
 
-import Table from "./classes/table.js";
+import Table from "./src/table.js";
 
 // controlador del juego
 document.getElementById("Start").addEventListener("click", startGame);
